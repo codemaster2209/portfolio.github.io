@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Aerospace Product Design Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #0066cc;
+            --gradient: linear-gradient(135deg, #00d4ff 0%, #0066cc 100%);
+            --shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+        
+        .hero .description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Sections */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-image {
+            text-align: center;
+        }
+        
+        .profile-placeholder {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin: 0 auto;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+        
+        .about-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .skill-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-primary);
+        }
+        
+        .skill-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+        
+        .skill-list {
+            list-style: none;
+        }
+        
+        .skill-list li {
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .skill-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+        
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-primary);
+        }
+        
+        .project-image {
+            height: 200px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-content h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+        
+        .project-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+        
+        /* Experience Section */
+        .experience-timeline {
+            position: relative;
+            margin: 3rem 0;
+        }
+        
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient);
+        }
+        
+        .experience-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 5rem;
+        }
+        
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            border: 3px solid var(--bg-primary);
+        }
+        
+        .experience-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .experience-card:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-primary);
+        }
+        
+        .experience-card h4 {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .experience-card .company {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .experience-card .date {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .experience-card p {
+            color: var(--text-secondary);
+        }
+        
+        /* Extra-curriculars Section */
+        .extras-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .extra-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+        
+        .extra-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-primary);
+        }
+        
+        .extra-card h4 {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .extra-card p {
+            color: var(--text-secondary);
+        }
+        
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-link:hover {
+            background: var(--gradient);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .experience-timeline::before {
+                left: 1rem;
+            }
+            
+            .experience-item {
+                padding-left: 3rem;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Intersection Observer Animation */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-on-scroll.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Your Name</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#extras">Extras</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Your Name</h1>
+            <p class="subtitle">Aerospace Product Design Engineer</p>
+            <p class="description">Masters in Aerospace Engineering | MBSE Specialist | System Safety Expert<br>
+            Transforming complex aerospace challenges into innovative solutions</p>
+            <a href="#projects" class="cta-button">View My Work</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section animate-on-scroll">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <div class="profile-placeholder">Professional Photo</div>
+            </div>
+            <div class="about-text">
+                <h3>Product Design Engineer with Aerospace Expertise</h3>
+                <p>With a Masters in Aerospace Engineering and experience in high-voltage power switching systems, I specialize in Model-Based Systems Engineering (MBSE) and system safety practices. My passion lies in designing innovative solutions that push the boundaries of aerospace and automotive technology.</p>
+                <p>Currently working as a Product Design Engineer, I leverage cutting-edge tools like MATLAB Simulink, SOLIDWORKS, and System Composer to develop robust, safety-critical systems. My approach combines theoretical knowledge with practical engineering experience to deliver exceptional results.</p>
+                <p>I'm actively seeking opportunities to contribute to groundbreaking projects in aerospace, automotive, and high-tech industries where I can apply my expertise in systems engineering and product design.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section animate-on-scroll">
+        <h2 class="section-title">Core Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h4>Systems Engineering</h4>
+                <ul class="skill-list">
+                    <li>Model-Based Systems Engineering (MBSE)</li>
+                    <li>System Architecture Design</li>
+                    <li>Requirements Engineering</li>
+                    <li>System Integration & Testing</li>
+                    <li>Configuration Management</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h4>Software & Tools</h4>
+                <ul class="skill-list">
+                    <li>MATLAB Simulink</li>
+                    <li>SOLIDWORKS</li>
+                    <li>System Composer</li>
+                    <li>CAD/CAE Software</li>
+                    <li>Simulation & Modeling</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h4>Safety & Standards</h4>
+                <ul class="skill-list">
+                    <li>System Safety Practices</li>
+                    <li>Risk Assessment & Management</li>
+                    <li>Safety Standards Compliance</li>
+                    <li>Failure Mode Analysis</li>
+                    <li>Certification Processes</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h4>Engineering Domains</h4>
+                <ul class="skill-list">
+                    <li>Aerospace Engineering</li>
+                    <li>Mechanical Design</li>
+                    <li>High-Voltage Systems</li>
+                    <li>Power Electronics</li>
+                    <li>Product Development</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section animate-on-scroll">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">Aerospace Project 1</div>
+                <div class="project-content">
+                    <h4>Advanced Aerospace System Design</h4>
+                    <p>Comprehensive system design project utilizing MBSE methodologies for next-generation aerospace applications. Focused on system integration and safety-critical requirements.</p>
+                    <div class="project-tags">
+                        <span class="tag">MBSE</span>
+                        <span class="tag">System Safety</span>
+                        <span class="tag">MATLAB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">MBSE Project 2</div>
+                <div class="project-content">
+                    <h4>Model-Based Systems Engineering Implementation</h4>
+                    <p>End-to-end MBSE implementation for complex engineering system. Demonstrated significant reduction in development time and improved system reliability.</p>
+                    <div class="project-tags">
+                        <span class="tag">System Composer</span>
+                        <span class="tag">Requirements</span>
+                        <span class="tag">Validation</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">Safety Project 3</div>
+                <div class="project-content">
+                    <h4>System Safety Analysis Framework</h4>
+                    <p>Developed comprehensive safety analysis framework for high-risk engineering applications. Included hazard analysis, risk assessment, and mitigation strategies.</p>
+                    <div class="project-tags">
+                        <span class="tag">Safety Analysis</span>
+                        <span class="tag">Risk Management</span>
+                        <span class="tag">Standards</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">Mechanical Project 4</div>
+                <div class="project-content">
+                    <h4>Mechanical Design Optimization</h4>
+                    <p>Advanced mechanical design project using SOLIDWORKS for structural optimization. Achieved significant weight reduction while maintaining performance specifications.</p>
+                    <div class="project-tags">
+                        <span class="tag">SOLIDWORKS</span>
+                        <span class="tag">Optimization</span>
+                        <span class="tag">Simulation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section animate-on-scroll">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="experience-timeline">
+            <div class="experience-item">
+                <div class="experience-card">
+                    <h4>Product Design Engineer</h4>
+                    <p class="company">High Voltage Power Switching Company</p>
+                    <p class="date">Current Position</p>
+                    <p>Leading product design initiatives for high-voltage power switching systems. Responsible for system architecture, safety analysis, and cross-functional collaboration. Utilizing MBSE methodologies to streamline development processes and ensure compliance with industry standards.</p>
+                </div>
+            </div>
+            <div class="experience-item">
+                <div class="experience-card">
+                    <h4>Masters in Aerospace Engineering</h4>
+                    <p class="company">University Name</p>
+                    <p class="date">Graduation Year</p>
+                    <p>Advanced studies in aerospace systems, focusing on system safety, design optimization, and engineering analysis. Completed thesis on [Your Thesis Topic]. Gained expertise in MBSE, MATLAB Simulink, and advanced engineering methodologies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Extra-curriculars Section -->
+    <section id="extras" class="section animate-on-scroll">
+        <h2 class="section-title">Extra-curricular Activities</h2>
+        <div class="extras-grid">
+            <div class="extra-card">
+                <h4>Professional Organizations</h4>
+                <p>Active member of aerospace and engineering professional societies. Participating in industry conferences and technical committees.</p>
+            </div>
+            <div class="extra-card">
+                <h4>Technical Writing</h4>
+                <p>Contributing to technical publications and industry blogs. Sharing insights on MBSE, system safety, and aerospace engineering best practices.</p>
+            </div>
+            <div class="extra-card">
+                <h4>Mentorship</h4>
+                <p>Mentoring junior engineers and students in aerospace engineering and systems design. Passionate about knowledge sharing and professional development.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section animate-on-scroll">
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="contact-content">
+            <p>I'm always interested in discussing new opportunities, challenging projects, and innovative solutions in aerospace and systems engineering.</p>
+            <div class="contact-links">
+                <a href="mailto:your.email@example.com" class="contact-link">
+                    📧 Email
+                </a>
+                <a href="https://linkedin.com/in/yourprofile" class="contact-link" target="_blank">
+                    💼 LinkedIn
+                </a>
+                <a href="#" class="contact-link">
+                    📄 Resume
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(26, 26, 26, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(26, 26, 26, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add staggered animation to cards
+        const cards = document.querySelectorAll('.skill-card, .project-card, .extra-card');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>
